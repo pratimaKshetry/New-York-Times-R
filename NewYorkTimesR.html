@@ -1,0 +1,438 @@
+<html>
+
+<head>
+<style type="text/css">
+.knitr .inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.rimage .left {
+  text-align: left;
+}
+.rimage .right {
+  text-align: right;
+}
+.rimage .center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+<title>Title</title>
+</head>
+
+<body>
+
+<p>This is an R HTML document. When you click the <b>Knit HTML</b> button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
+
+<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">setwd</span><span class="hl std">(</span><span class="hl str">&quot;E:/Rdataset/HW1-ExploratoryData-Nyt&quot;</span><span class="hl std">)</span>
+
+<span class="hl std">data</span><span class="hl kwb">&lt;-</span><span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;E:/Rdataset/HW1-ExploratoryData-Nyt/nyt1.csv&quot;</span><span class="hl std">,</span><span class="hl kwc">stringsAsFactors</span><span class="hl std">=</span><span class="hl num">FALSE</span><span class="hl std">,</span> <span class="hl kwc">strip.white</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">,</span><span class="hl kwc">na.strings</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;NA&quot;</span><span class="hl std">,</span><span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
+
+<span class="hl com">###Call Libraries</span>
+<span class="hl kwd">library</span><span class="hl std">(</span><span class="hl str">&quot;ggplot2&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="warning"><pre class="knitr r">## Warning: package 'ggplot2' was built under R version 3.1.3
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(</span><span class="hl str">&quot;doBy&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="warning"><pre class="knitr r">## Warning: package 'doBy' was built under R version 3.1.3
+</pre></div>
+<div class="message"><pre class="knitr r">## Loading required package: survival
+## Loading required package: splines
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(</span><span class="hl str">&quot;corrplot&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="warning"><pre class="knitr r">## Warning: package 'corrplot' was built under R version 3.1.3
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(</span><span class="hl str">&quot;data.table&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="warning"><pre class="knitr r">## Warning: package 'data.table' was built under R version 3.1.3
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(</span><span class="hl str">&quot;plyr&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="warning"><pre class="knitr r">## Warning: package 'plyr' was built under R version 3.1.3
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com">###Correlation Plot of Variables in dataset</span>
+<span class="hl kwd">corrplot</span><span class="hl std">(</span><span class="hl kwd">cor</span><span class="hl std">(data),</span> <span class="hl kwc">method</span><span class="hl std">=</span><span class="hl str">&quot;number&quot;</span><span class="hl std">,</span> <span class="hl kwc">tl.cex</span><span class="hl std">=</span><span class="hl num">0.75</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl std">breaks</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span><span class="hl num">18</span><span class="hl std">,</span><span class="hl num">25</span><span class="hl std">,</span><span class="hl num">35</span><span class="hl std">,</span><span class="hl num">45</span><span class="hl std">,</span><span class="hl num">55</span><span class="hl std">,</span><span class="hl num">65</span><span class="hl std">,</span><span class="hl num">106</span><span class="hl std">)</span> <span class="hl com">##Create breaking point vector  </span>
+
+<span class="hl std">labels</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'&lt;18'</span><span class="hl std">,</span><span class="hl str">'18-24'</span><span class="hl std">,</span><span class="hl str">'25-34'</span><span class="hl std">,</span><span class="hl str">'35-44'</span><span class="hl std">,</span> <span class="hl str">'45-54'</span><span class="hl std">,</span><span class="hl str">'55-64'</span><span class="hl std">,</span><span class="hl str">'65+'</span><span class="hl std">)</span>  <span class="hl com">##Create labels</span>
+
+<span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">Age_Group</span><span class="hl kwb">&lt;-</span><span class="hl kwd">cut</span><span class="hl std">(data</span><span class="hl opt">$</span><span class="hl std">Age,</span>
+                     <span class="hl kwc">breaks</span><span class="hl std">=breaks,</span>
+                     <span class="hl kwc">labels</span><span class="hl std">=labels,</span>
+                     <span class="hl kwc">right</span><span class="hl std">=F,</span>
+                     <span class="hl kwc">ordered_result</span> <span class="hl std">= T)</span>
+
+<span class="hl com">##Now Plot the impressions and click through rate</span>
+<span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">ctr</span><span class="hl kwb">&lt;-</span><span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">Clicks</span><span class="hl opt">/</span><span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">Impressions</span>
+<span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">ctr[</span><span class="hl kwd">is.na</span><span class="hl std">(data</span><span class="hl opt">$</span><span class="hl std">ctr)]</span> <span class="hl kwb">&lt;-</span> <span class="hl num">0</span>   <span class="hl com"># replace the NA's with '0'</span>
+<span class="hl std">mean_ctr</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">ddply</span><span class="hl std">(data,</span> <span class="hl str">&quot;Age_Group&quot;</span><span class="hl std">,</span>
+                  <span class="hl std">summarise,</span>
+                  <span class="hl kwc">ctr.mean</span><span class="hl std">=</span><span class="hl kwd">mean</span><span class="hl std">(ctr))</span>
+
+<span class="hl kwd">ggplot</span><span class="hl std">(</span><span class="hl kwc">data</span><span class="hl std">=mean_ctr,</span>
+       <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">=Age_Group,</span>
+           <span class="hl kwc">y</span><span class="hl std">=ctr.mean,</span>
+           <span class="hl kwc">fill</span><span class="hl std">=Age_Group))</span> <span class="hl opt">+</span>
+  <span class="hl kwd">geom_bar</span><span class="hl std">(</span><span class="hl kwc">stat</span><span class="hl std">=</span><span class="hl str">&quot;identity&quot;</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">labs</span><span class="hl std">(</span><span class="hl kwc">title</span><span class="hl std">=</span><span class="hl str">&quot;Average CTR per Age Grou - Day 1&quot;</span><span class="hl std">,</span>
+       <span class="hl kwc">x</span><span class="hl std">=</span><span class="hl str">&quot;Age Groups&quot;</span><span class="hl std">,</span>
+       <span class="hl kwc">y</span><span class="hl std">=</span> <span class="hl str">&quot;Mean of CTR&quot;</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-1-2.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl com">#Define a new variable to segment or categorize users based on their click behavior </span>
+
+<span class="hl com">####1.People who clicked and those who did not clicked</span>
+<span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">have_clicked</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">ifelse</span><span class="hl std">(data</span><span class="hl opt">$</span><span class="hl std">Clicks</span><span class="hl opt">&gt;=</span><span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">)</span>
+<span class="hl kwd">prop.table</span><span class="hl std">(</span><span class="hl kwd">table</span><span class="hl std">(</span><span class="hl kwd">as.factor</span><span class="hl std">(data</span><span class="hl opt">$</span><span class="hl std">have_clicked)))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## 
+##          0          1 
+## 0.91310114 0.08689886
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com">###Relative frequency of Clicks by Age Group</span>
+<span class="hl std">Clicked</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">prop.table</span><span class="hl std">(</span><span class="hl kwd">table</span><span class="hl std">(data</span><span class="hl opt">$</span><span class="hl std">Age_Group, data</span><span class="hl opt">$</span><span class="hl std">have_clicked</span><span class="hl opt">==</span><span class="hl num">1</span><span class="hl std">))</span>
+<span class="hl std">Clicked</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">data.frame</span><span class="hl std">(Clicked)</span>
+<span class="hl std">Clicked</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">subset</span><span class="hl std">(Clicked, Var2</span><span class="hl opt">==</span><span class="hl num">TRUE</span><span class="hl std">)</span>
+<span class="hl std">Clicked</span><span class="hl opt">$</span><span class="hl std">Var2</span> <span class="hl kwb">&lt;-</span> <span class="hl kwa">NULL</span>
+<span class="hl std">Clicked</span><span class="hl kwb">&lt;-</span> <span class="hl kwd">rename</span><span class="hl std">(Clicked,</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;Var1&quot;</span> <span class="hl std">=</span> <span class="hl str">&quot;AgeGroup&quot;</span><span class="hl std">))</span>
+<span class="hl com">####Number of Clicks by Age Group</span>
+<span class="hl std">Clicked</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##    AgeGroup        Freq
+## 8       &lt;18 0.042991637
+## 9     18-24 0.004596041
+## 10    25-34 0.006260389
+## 11    35-44 0.007835302
+## 12    45-54 0.006847164
+## 13    55-64 0.009460385
+## 14      65+ 0.008906330
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">s</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">sum</span><span class="hl std">(Clicked</span><span class="hl opt">$</span><span class="hl std">Freq)</span>
+<span class="hl kwd">head</span><span class="hl std">(s)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 0.08689725
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">Clicked</span><span class="hl opt">$</span><span class="hl std">RelFrq</span> <span class="hl kwb">&lt;-</span> <span class="hl std">Clicked</span><span class="hl opt">$</span><span class="hl std">Freq</span><span class="hl opt">/</span><span class="hl std">s</span> <span class="hl com">#calculate relative frequency</span>
+<span class="hl std">labl</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">data.table</span><span class="hl std">(Clicked)[, per</span> <span class="hl kwb">:=</span> <span class="hl kwd">sprintf</span><span class="hl std">(</span><span class="hl str">&quot;%.1f%%&quot;</span><span class="hl std">,</span>
+                             <span class="hl std">RelFrq</span><span class="hl opt">*</span><span class="hl num">100</span><span class="hl std">),</span> <span class="hl kwc">by</span> <span class="hl std">= AgeGroup]</span>
+
+<span class="hl kwd">head</span><span class="hl std">(labl)</span>  <span class="hl com">###Tested</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##    AgeGroup        Freq     RelFrq   per
+## 1:      &lt;18 0.042991637 0.49474107 49.5%
+## 2:    18-24 0.004596041 0.05289053  5.3%
+## 3:    25-34 0.006260389 0.07204358  7.2%
+## 4:    35-44 0.007835302 0.09016743  9.0%
+## 5:    45-54 0.006847164 0.07879609  7.9%
+## 6:    55-64 0.009460385 0.10886864 10.9%
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">ggplot</span><span class="hl std">(Clicked,</span> <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">=AgeGroup,</span> <span class="hl kwc">y</span><span class="hl std">=RelFrq,</span> <span class="hl kwc">fill</span><span class="hl std">=AgeGroup))</span> <span class="hl opt">+</span>
+  <span class="hl kwd">geom_bar</span><span class="hl std">(</span><span class="hl kwc">stat</span><span class="hl std">=</span><span class="hl str">&quot;identity&quot;</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">labs</span><span class="hl std">(</span><span class="hl kwc">title</span><span class="hl std">=</span><span class="hl str">&quot;At least 1 Clicks by Age Group - Day 1&quot;</span><span class="hl std">,</span>
+       <span class="hl kwc">x</span><span class="hl std">=</span> <span class="hl str">&quot;Age Groups&quot;</span><span class="hl std">,</span>
+       <span class="hl kwc">y</span><span class="hl std">=</span> <span class="hl str">&quot;Relative Frequency of Clicks&quot;</span><span class="hl std">)</span><span class="hl opt">+</span>
+  <span class="hl kwd">geom_text</span><span class="hl std">(</span><span class="hl kwc">data</span> <span class="hl std">= labl,</span>
+            <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">x</span> <span class="hl std">= AgeGroup,</span> <span class="hl kwc">y</span> <span class="hl std">= RelFrq,</span>
+                <span class="hl kwc">label</span> <span class="hl std">= per),</span><span class="hl kwc">vjust</span><span class="hl std">=</span><span class="hl num">1.0</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-1-3.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl com">##People who logged in and those who did not</span>
+<span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">have_Logged</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">ifelse</span><span class="hl std">(data</span><span class="hl opt">$</span><span class="hl std">Signed_In</span><span class="hl opt">&gt;=</span><span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">)</span>
+<span class="hl kwd">prop.table</span><span class="hl std">(</span><span class="hl kwd">table</span><span class="hl std">(</span><span class="hl kwd">as.factor</span><span class="hl std">(data</span><span class="hl opt">$</span><span class="hl std">have_Logged)))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## 
+##         0         1 
+## 0.2990701 0.7009299
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com">###Freq of LoggedIn by Age Grup</span>
+<span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">have_Logged</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">ifelse</span><span class="hl std">(data</span><span class="hl opt">$</span><span class="hl std">Signed_In</span><span class="hl opt">&gt;=</span><span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">)</span>
+<span class="hl kwd">prop.table</span><span class="hl std">(</span><span class="hl kwd">table</span><span class="hl std">(data</span><span class="hl opt">$</span><span class="hl std">have_Logged))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## 
+##         0         1 
+## 0.2990701 0.7009299
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">log</span><span class="hl kwb">&lt;-</span><span class="hl kwd">prop.table</span><span class="hl std">(</span><span class="hl kwd">table</span><span class="hl std">(data</span><span class="hl opt">$</span><span class="hl std">Age_Group,data</span><span class="hl opt">$</span><span class="hl std">have_Logged))</span>
+<span class="hl std">log</span><span class="hl kwb">&lt;-</span><span class="hl kwd">data.frame</span><span class="hl std">(log)</span>
+<span class="hl std">log1</span><span class="hl kwb">&lt;-</span><span class="hl kwd">subset</span><span class="hl std">(log,log</span><span class="hl opt">$</span><span class="hl std">Var2</span><span class="hl opt">==</span><span class="hl num">1</span><span class="hl std">)</span>
+<span class="hl std">log1</span><span class="hl kwb">&lt;-</span><span class="hl kwd">rename</span><span class="hl std">(log1,</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;Var1&quot;</span><span class="hl std">=</span><span class="hl str">&quot;AgeGroup&quot;</span><span class="hl std">))</span>
+<span class="hl com">#####Frequency of LogIns by Age Group</span>
+<span class="hl std">log1</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##    AgeGroup Var2       Freq
+## 8       &lt;18    1 0.03016329
+## 9     18-24    1 0.08876664
+## 10    25-34    1 0.12689611
+## 11    35-44    1 0.15456834
+## 12    45-54    1 0.14023270
+## 13    55-64    1 0.09758790
+## 14      65+    1 0.06271295
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">sumlog</span><span class="hl kwb">&lt;-</span><span class="hl kwd">sum</span><span class="hl std">(log1</span><span class="hl opt">$</span><span class="hl std">Freq)</span>
+<span class="hl std">relLog</span><span class="hl kwb">&lt;-</span><span class="hl std">log1</span><span class="hl opt">$</span><span class="hl std">Freq</span><span class="hl opt">/</span><span class="hl std">sumlog</span>
+<span class="hl std">relLog</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 0.04303337 0.12664160 0.18104017 0.22051959 0.20006722 0.13922672
+## [7] 0.08947133
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">lablog</span><span class="hl kwb">&lt;-</span><span class="hl kwd">data.table</span><span class="hl std">(log1)[,per12</span> <span class="hl kwb">:=</span><span class="hl kwd">sprintf</span><span class="hl std">(</span><span class="hl str">&quot;%.1f%%&quot;</span><span class="hl std">,</span>
+                                          <span class="hl std">relLog</span><span class="hl opt">*</span><span class="hl num">100</span><span class="hl std">,</span>
+                                          <span class="hl kwc">by</span><span class="hl std">=AgeGroup)]</span>
+<span class="hl kwd">ggplot</span><span class="hl std">(log1,</span>
+       <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">=AgeGroup,</span>
+           <span class="hl kwc">y</span><span class="hl std">=relLog,</span>
+           <span class="hl kwc">fill</span><span class="hl std">=AgeGroup))</span><span class="hl opt">+</span>
+  <span class="hl kwd">geom_bar</span><span class="hl std">(</span><span class="hl kwc">stat</span><span class="hl std">=</span><span class="hl str">&quot;identity&quot;</span><span class="hl std">)</span><span class="hl opt">+</span>
+  <span class="hl kwd">labs</span><span class="hl std">(</span><span class="hl kwc">title</span><span class="hl std">=</span><span class="hl str">&quot;Relative Frequency of LoggedIn Behavior per Age Group-Day 1&quot;</span><span class="hl std">,</span>
+       <span class="hl kwc">x</span><span class="hl std">=</span><span class="hl str">&quot;Age Group&quot;</span><span class="hl std">,</span>
+       <span class="hl kwc">y</span><span class="hl std">=</span> <span class="hl str">&quot;Relative Frequency&quot;</span><span class="hl std">)</span><span class="hl opt">+</span>
+  <span class="hl kwd">geom_text</span><span class="hl std">(</span><span class="hl kwc">data</span><span class="hl std">=lablog,</span>
+            <span class="hl kwd">aes</span><span class="hl std">(</span>
+              <span class="hl kwc">label</span><span class="hl std">=per12),</span><span class="hl kwc">vjust</span><span class="hl std">=</span><span class="hl num">1.0</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-1-4.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl com">####Frequency of Logged in By Gender</span>
+<span class="hl std">log</span><span class="hl kwb">&lt;-</span><span class="hl kwd">prop.table</span><span class="hl std">(</span><span class="hl kwd">table</span><span class="hl std">(data</span><span class="hl opt">$</span><span class="hl std">Gender,data</span><span class="hl opt">$</span><span class="hl std">have_Logged))</span>
+<span class="hl std">log</span><span class="hl kwb">&lt;-</span><span class="hl kwd">data.frame</span><span class="hl std">(log)</span>
+<span class="hl std">log1</span><span class="hl kwb">&lt;-</span><span class="hl kwd">subset</span><span class="hl std">(log,log</span><span class="hl opt">$</span><span class="hl std">Var2</span><span class="hl opt">==</span><span class="hl num">1</span><span class="hl std">)</span>
+<span class="hl std">log1</span><span class="hl kwb">&lt;-</span><span class="hl kwd">rename</span><span class="hl std">(log1,</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;Var1&quot;</span><span class="hl std">=</span><span class="hl str">&quot;Gender&quot;</span><span class="hl std">))</span>
+<span class="hl com"># we want to attach value labels 1=Male, 0=Female</span>
+<span class="hl std">log1</span><span class="hl opt">$</span><span class="hl std">Gender</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">factor</span><span class="hl std">(log1</span><span class="hl opt">$</span><span class="hl std">Gender,</span>
+                      <span class="hl kwc">levels</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl std">),</span>
+                      <span class="hl kwc">labels</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;Female&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;Male&quot;</span><span class="hl std">))</span>
+<span class="hl com">###Frequency of LoggedIn by Gender</span>
+<span class="hl std">log1</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##   Gender Var2      Freq
+## 3 Female    1 0.3338925
+## 4   Male    1 0.3670374
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">sumlog</span><span class="hl kwb">&lt;-</span><span class="hl kwd">sum</span><span class="hl std">(log1</span><span class="hl opt">$</span><span class="hl std">Freq)</span>
+<span class="hl std">relLog</span><span class="hl kwb">&lt;-</span><span class="hl std">log1</span><span class="hl opt">$</span><span class="hl std">Freq</span><span class="hl opt">/</span><span class="hl std">sumlog</span>
+<span class="hl std">relLog</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 0.4763565 0.5236435
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">lablog</span><span class="hl kwb">&lt;-</span><span class="hl kwd">data.table</span><span class="hl std">(log1)[,per12</span> <span class="hl kwb">:=</span><span class="hl kwd">sprintf</span><span class="hl std">(</span><span class="hl str">&quot;%.1f%%&quot;</span><span class="hl std">,</span>
+                                          <span class="hl std">relLog</span><span class="hl opt">*</span><span class="hl num">100</span><span class="hl std">,</span>
+                                          <span class="hl kwc">by</span><span class="hl std">=Gender)]</span>
+<span class="hl kwd">ggplot</span><span class="hl std">(log1,</span>
+       <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">=Gender,</span>
+           <span class="hl kwc">y</span><span class="hl std">=relLog,</span>
+           <span class="hl kwc">fill</span><span class="hl std">=Gender))</span><span class="hl opt">+</span>
+  <span class="hl kwd">geom_bar</span><span class="hl std">(</span><span class="hl kwc">stat</span><span class="hl std">=</span><span class="hl str">&quot;identity&quot;</span><span class="hl std">)</span><span class="hl opt">+</span>
+  <span class="hl kwd">labs</span><span class="hl std">(</span><span class="hl kwc">title</span><span class="hl std">=</span><span class="hl str">&quot;Relative Frequency of LoggedIn Behavior per Gender-Day 5&quot;</span><span class="hl std">,</span>
+       <span class="hl kwc">x</span><span class="hl std">=</span><span class="hl str">&quot;Gender&quot;</span><span class="hl std">,</span>
+       <span class="hl kwc">y</span><span class="hl std">=</span> <span class="hl str">&quot;Relative Frequency&quot;</span><span class="hl std">)</span><span class="hl opt">+</span>
+  <span class="hl kwd">geom_text</span><span class="hl std">(</span><span class="hl kwc">data</span><span class="hl std">=lablog,</span>
+            <span class="hl kwd">aes</span><span class="hl std">(</span>
+              <span class="hl kwc">label</span><span class="hl std">=per12),</span><span class="hl kwc">vjust</span><span class="hl std">=</span><span class="hl num">1.0</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-1-5.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl com">#Frequency table of Clicks by Age group</span>
+<span class="hl kwd">attach</span><span class="hl std">(data)</span>
+<span class="hl std">mytable</span><span class="hl kwb">&lt;-</span><span class="hl kwd">table</span><span class="hl std">(Age_Group,Clicks)</span>
+<span class="hl std">mytable</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##          Clicks
+## Age_Group      0      1      2      3      4
+##     &lt;18   131225  17998   1595    107      9
+##     18-24  38587   2047     60      0      0
+##     25-34  55304   2803     67      0      0
+##     35-44  67268   3523     68      1      0
+##     45-54  61149   3046     93      0      0
+##     55-64  40401   4125    205      7      0
+##     65+    24667   3829    242     12      0
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">newtable</span><span class="hl kwb">&lt;-</span><span class="hl kwd">data.matrix</span><span class="hl std">(mytable)</span>
+<span class="hl com">###Number of Clicks Per Age group</span>
+<span class="hl std">newtable</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##          Clicks
+## Age_Group      0      1      2      3      4
+##     &lt;18   131225  17998   1595    107      9
+##     18-24  38587   2047     60      0      0
+##     25-34  55304   2803     67      0      0
+##     35-44  67268   3523     68      1      0
+##     45-54  61149   3046     93      0      0
+##     55-64  40401   4125    205      7      0
+##     65+    24667   3829    242     12      0
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">means1</span><span class="hl kwb">&lt;-</span><span class="hl kwd">colMeans</span><span class="hl std">(newtable)</span>
+<span class="hl std">newtab</span><span class="hl kwb">&lt;-</span><span class="hl kwd">table</span><span class="hl std">(Age_Group, Impressions)</span>
+
+<span class="hl com">###########################Metrics#################################</span>
+
+<span class="hl com">###Calculate average Impressions of page across Age Group</span>
+<span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">mean_Imp</span><span class="hl kwb">&lt;-</span><span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">Impressions</span>
+<span class="hl std">mean_Impression_AgeGroup</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">ddply</span><span class="hl std">(data,</span> <span class="hl str">&quot;Age_Group&quot;</span><span class="hl std">,</span>
+                  <span class="hl std">summarise,</span>
+                  <span class="hl kwc">mean_Imp.mean</span><span class="hl std">=</span><span class="hl kwd">mean</span><span class="hl std">(mean_Imp))</span>
+<span class="hl std">mean_Impression_AgeGroup</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##   Age_Group mean_Imp.mean
+## 1       &lt;18      5.000345
+## 2     18-24      5.002826
+## 3     25-34      4.993829
+## 4     35-44      5.021507
+## 5     45-54      5.010406
+## 6     55-64      5.022308
+## 7       65+      5.012452
+## 8      &lt;NA&gt;      4.000000
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com">#####Average Click Through Rate across Age Groups</span>
+<span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">ctr</span><span class="hl kwb">&lt;-</span><span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">Clicks</span><span class="hl opt">/</span><span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">Impressions</span>
+<span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">ctr[</span><span class="hl kwd">is.na</span><span class="hl std">(data</span><span class="hl opt">$</span><span class="hl std">ctr)]</span> <span class="hl kwb">&lt;-</span> <span class="hl num">0</span>   <span class="hl com"># replace the NA's with '0'</span>
+<span class="hl std">mean_ctr</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">ddply</span><span class="hl std">(data,</span> <span class="hl str">&quot;Age_Group&quot;</span><span class="hl std">,</span>
+                  <span class="hl std">summarise,</span>
+                  <span class="hl kwc">ctr.mean</span><span class="hl std">=</span><span class="hl kwd">mean</span><span class="hl std">(ctr))</span>
+<span class="hl com">#####Average CTR by Age Groups</span>
+<span class="hl std">mean_ctr</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##   Age_Group    ctr.mean
+## 1       &lt;18 0.028337240
+## 2     18-24 0.010658326
+## 3     25-34 0.010081272
+## 4     35-44 0.010218683
+## 5     45-54 0.009888995
+## 6     55-64 0.020181538
+## 7       65+ 0.029594642
+## 8      &lt;NA&gt; 0.066666667
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com">#######Average Impressions across Gender</span>
+<span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">AvgeImp</span><span class="hl kwb">&lt;-</span><span class="hl std">data</span><span class="hl opt">$</span><span class="hl std">Impressions</span>
+<span class="hl std">mean_Imp_Gender</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">ddply</span><span class="hl std">(data,</span> <span class="hl str">&quot;Gender&quot;</span><span class="hl std">,</span>
+                        <span class="hl std">summarise,</span>
+                        <span class="hl kwc">ImpressionByGender.mean</span><span class="hl std">=</span><span class="hl kwd">mean</span><span class="hl std">(AvgeImp))</span>
+<span class="hl com">####Mean Impression by Gender</span>
+<span class="hl std">mean_Imp_Gender</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##   Gender ImpressionByGender.mean
+## 1      0                5.006555
+## 2      1                5.008629
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com">#####Now extending analysis across days#######</span>
+
+<span class="hl com">###Read csv file for Displaying histograms.</span>
+<span class="hl std">data1</span><span class="hl kwb">&lt;-</span><span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;E:/Rdataset/HW1-ExploratoryData-Nyt/nyt1.csv&quot;</span><span class="hl std">,</span><span class="hl kwc">stringsAsFactors</span><span class="hl std">=</span><span class="hl num">FALSE</span><span class="hl std">,</span> <span class="hl kwc">strip.white</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">,</span><span class="hl kwc">na.strings</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;NA&quot;</span><span class="hl std">,</span><span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
+<span class="hl std">data2</span><span class="hl kwb">&lt;-</span><span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;E:/Rdataset/HW1-ExploratoryData-Nyt/nyt2.csv&quot;</span><span class="hl std">,</span><span class="hl kwc">stringsAsFactors</span><span class="hl std">=</span><span class="hl num">FALSE</span><span class="hl std">,</span> <span class="hl kwc">strip.white</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">,</span><span class="hl kwc">na.strings</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;NA&quot;</span><span class="hl std">,</span><span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
+<span class="hl std">data3</span><span class="hl kwb">&lt;-</span><span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;E:/Rdataset/HW1-ExploratoryData-Nyt/nyt3.csv&quot;</span><span class="hl std">,</span><span class="hl kwc">stringsAsFactors</span><span class="hl std">=</span><span class="hl num">FALSE</span><span class="hl std">,</span> <span class="hl kwc">strip.white</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">,</span><span class="hl kwc">na.strings</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;NA&quot;</span><span class="hl std">,</span><span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
+<span class="hl std">data4</span><span class="hl kwb">&lt;-</span><span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;E:/Rdataset/HW1-ExploratoryData-Nyt/nyt4.csv&quot;</span><span class="hl std">,</span><span class="hl kwc">stringsAsFactors</span><span class="hl std">=</span><span class="hl num">FALSE</span><span class="hl std">,</span> <span class="hl kwc">strip.white</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">,</span><span class="hl kwc">na.strings</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;NA&quot;</span><span class="hl std">,</span><span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
+<span class="hl std">data5</span><span class="hl kwb">&lt;-</span><span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;E:/Rdataset/HW1-ExploratoryData-Nyt/nyt5.csv&quot;</span><span class="hl std">,</span><span class="hl kwc">stringsAsFactors</span><span class="hl std">=</span><span class="hl num">FALSE</span><span class="hl std">,</span> <span class="hl kwc">strip.white</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">,</span><span class="hl kwc">na.strings</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;NA&quot;</span><span class="hl std">,</span><span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
+<span class="hl std">data6</span><span class="hl kwb">&lt;-</span><span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;E:/Rdataset/HW1-ExploratoryData-Nyt/nyt6.csv&quot;</span><span class="hl std">,</span><span class="hl kwc">stringsAsFactors</span><span class="hl std">=</span><span class="hl num">FALSE</span><span class="hl std">,</span> <span class="hl kwc">strip.white</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">,</span><span class="hl kwc">na.strings</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;NA&quot;</span><span class="hl std">,</span><span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
+<span class="hl std">data7</span><span class="hl kwb">&lt;-</span><span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;E:/Rdataset/HW1-ExploratoryData-Nyt/nyt7.csv&quot;</span><span class="hl std">,</span><span class="hl kwc">stringsAsFactors</span><span class="hl std">=</span><span class="hl num">FALSE</span><span class="hl std">,</span> <span class="hl kwc">strip.white</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">,</span><span class="hl kwc">na.strings</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;NA&quot;</span><span class="hl std">,</span><span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
+
+<span class="hl com">####Histogram of Impressions</span>
+
+<span class="hl std">day1imp</span><span class="hl kwb">&lt;-</span><span class="hl std">data1</span><span class="hl opt">$</span><span class="hl std">Impressions</span>
+<span class="hl std">day2imp</span><span class="hl kwb">&lt;-</span><span class="hl std">data2</span><span class="hl opt">$</span><span class="hl std">Impressions</span>
+<span class="hl std">day3imp</span><span class="hl kwb">&lt;-</span><span class="hl std">data3</span><span class="hl opt">$</span><span class="hl std">Impressions</span>
+<span class="hl std">day4imp</span><span class="hl kwb">&lt;-</span><span class="hl std">data4</span><span class="hl opt">$</span><span class="hl std">Impressions</span>
+<span class="hl std">day5imp</span><span class="hl kwb">&lt;-</span><span class="hl std">data5</span><span class="hl opt">$</span><span class="hl std">Impressions</span>
+<span class="hl std">day6imp</span><span class="hl kwb">&lt;-</span><span class="hl std">data6</span><span class="hl opt">$</span><span class="hl std">Impressions</span>
+<span class="hl std">day7imp</span><span class="hl kwb">&lt;-</span><span class="hl std">data7</span><span class="hl opt">$</span><span class="hl std">Impressions</span>
+
+<span class="hl kwd">par</span><span class="hl std">(</span><span class="hl kwc">mfrow</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">2</span><span class="hl std">,</span><span class="hl num">4</span><span class="hl std">))</span>
+<span class="hl com">####Histogram of Impressions</span>
+
+<span class="hl kwd">hist</span><span class="hl std">(day1imp,</span>
+     <span class="hl kwc">prob</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">,</span>
+     <span class="hl kwc">xlab</span><span class="hl std">=</span><span class="hl str">&quot;Day 1 Impressions&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">hist</span><span class="hl std">(day2imp,</span>
+     <span class="hl kwc">prob</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">,</span>
+     <span class="hl kwc">xlab</span><span class="hl std">=</span><span class="hl str">&quot;Day 2 Impressions&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">hist</span><span class="hl std">(day3imp,</span>
+     <span class="hl kwc">prob</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">,</span>
+     <span class="hl kwc">xlab</span><span class="hl std">=</span><span class="hl str">&quot;Day 3 Impressions&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">hist</span><span class="hl std">(day4imp,</span>
+     <span class="hl kwc">prob</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">,</span>
+     <span class="hl kwc">xlab</span><span class="hl std">=</span><span class="hl str">&quot;Day 4 Impressions&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">hist</span><span class="hl std">(day5imp,</span>
+     <span class="hl kwc">prob</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">,</span>
+     <span class="hl kwc">xlab</span><span class="hl std">=</span><span class="hl str">&quot;Day 5 Impressions&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">hist</span><span class="hl std">(day6imp,</span>
+     <span class="hl kwc">prob</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">,</span>
+     <span class="hl kwc">xlab</span><span class="hl std">=</span><span class="hl str">&quot;Day 6 Impressions&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">hist</span><span class="hl std">(day7imp,</span>
+     <span class="hl kwc">prob</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">,</span>
+     <span class="hl kwc">xlab</span><span class="hl std">=</span><span class="hl str">&quot;Day 7 Impressions&quot;</span><span class="hl std">)</span>
+
+
+<span class="hl com">#Interaction plot of CTR in behavior of age groups across gender</span>
+<span class="hl std">means_</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">with</span><span class="hl std">(data,</span> <span class="hl kwd">aggregate</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">=</span><span class="hl kwd">list</span><span class="hl std">(</span><span class="hl kwc">Y</span><span class="hl std">=ctr),</span>
+                               <span class="hl kwc">by</span><span class="hl std">=</span><span class="hl kwd">list</span><span class="hl std">(</span><span class="hl kwc">A</span><span class="hl std">=Age_Group,</span> <span class="hl kwc">B</span><span class="hl std">=Gender),mean))</span>
+
+<span class="hl kwd">par</span><span class="hl std">(</span><span class="hl kwc">mfrow</span><span class="hl std">=</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl std">))</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-1-6.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl kwd">with</span><span class="hl std">(means_,</span> <span class="hl kwd">interaction.plot</span><span class="hl std">(</span><span class="hl kwc">x.factor</span><span class="hl std">=A,</span> <span class="hl kwc">trace.factor</span><span class="hl std">=B,</span> <span class="hl kwc">response</span><span class="hl std">=Y,</span> <span class="hl kwc">type</span><span class="hl std">=</span><span class="hl str">'b'</span><span class="hl std">,</span><span class="hl kwc">main</span> <span class="hl std">=</span> <span class="hl str">&quot;CTR by gender and age group, day 1&quot;</span><span class="hl std">,</span><span class="hl kwc">xlab</span> <span class="hl std">=</span> <span class="hl str">&quot;Age groups&quot;</span><span class="hl std">,</span> <span class="hl kwc">ylab</span><span class="hl std">=</span> <span class="hl str">&quot;Click Through Rate&quot;</span><span class="hl std">))</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-1-7.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl com">###########d. Describe and interpret any patterns you find.</span>
+<span class="hl com">####Ans: Following are the few observations made on the given dataset:</span>
+  <span class="hl com">###a. In the above data, we see that people from the age group less than 18 years are most likely (and most frequently) to click an advertisement than any other age group.</span>
+  <span class="hl com">###b. It appears that females are most likely to click an advertisement than a male, however males are more likely view the page with a LoggedIn status. </span>
+  <span class="hl com">###c. People from the age group of 35-44 show more Signed In behavior. We can also note that the data for the LoggedIn Behavior per age group is normally distributed. We see no anomalies in the given data.</span>
+  <span class="hl com">###d. From the interaction plots, the difference between CTR is higher between males and females for the age group &gt;18 and 65 + while the CTR behavior is almost the same for male and female across all age groups. Also, from the interaction plots, we see that the advert impression across gender varies as per age groups. However, people from the age group of less than 18 years have more Page views followed by people from the age group of 35-44.</span>
+        <span class="hl com">## the median impression (page views) of the New York Times web page is 4-5. </span>
+</pre></div>
+</div></div>
+
+<p>You can also embed plots, for example:</p>
+
+<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">plot</span><span class="hl std">(cars)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div></div>
+
+</body>
+</html>
