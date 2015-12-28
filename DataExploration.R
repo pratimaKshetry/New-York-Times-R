@@ -8,9 +8,9 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ```{r}
-setwd("E:/Rdataset/HW1-ExploratoryData-Nyt")
+setwd("E:/dataset/ExploratoryData-Nyt")
 
-data<-read.csv("E:/Rdataset/HW1-ExploratoryData-Nyt/nyt1.csv",stringsAsFactors=FALSE, strip.white=TRUE,na.strings=c("NA",""))
+data<-read.csv("E:/dataset/ExploratoryData-Nyt/nyt1.csv",stringsAsFactors=FALSE, strip.white=TRUE,na.strings=c("NA",""))
 
 breaks <- c(0,18,25,35,45,55,65,106) ##Create breaking point vector  
 
